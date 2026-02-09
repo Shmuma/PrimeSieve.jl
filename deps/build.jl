@@ -1,7 +1,8 @@
 using BinDeps
+import Base.Libc.Libdl
 
 # Find the directory with installed Julia libraries
-julialibpath = dirname(Libdl.dlpath(Libdl.dlopen("libgmp")))
+julialibpath = dirname(Base.Libc.Libdl.dlpath(Libdl.dlopen("libgmp")))
 
 # Set link flags for Autotools external packages
 # This is only needed for the ecm package
@@ -24,9 +25,9 @@ primecount = library_dependency("primecount", aliases = ["libprimecount"], depen
 cprimecount = library_dependency("cprimecount", aliases = ["libcprimecount"], depends = [primecount])
 smsieve = library_dependency("smsieve", aliases = ["libsmsieve"], depends = [gmpecm])
 
-provides(Sources, URI("http://dl.bintray.com/kimwalisch/primesieve/primesieve-5.4.1.tar.gz"), primesieve)
-provides(Sources, URI("http://dl.bintray.com/kimwalisch/primecount/primecount-1.4.tar.gz"), primecount)
-provides(Sources, URI("https://gforge.inria.fr/frs/download.php/file/32159/ecm-6.4.4.tar.gz"), gmpecm)
+provides(Sources, URI("https://github.com/kimwalisch/primesieve/archive/refs/tags/v12.13.tar.gz"), primesieve)
+provides(Sources, URI("https://github.com/kimwalisch/primecount/archive/refs/tags/v8.2.tar.gz"), primecount)
+provides(Sources, URI("https://gitlab.inria.fr/zimmerma/ecm/-/archive/git-7.0.6/ecm-git-7.0.6.tar.gz"), gmpecm)
 # Getting zip- or tarball from github with a predictable name is mysterious to me.
 # But, pushing tags allows downloading this way...
 provides(Sources, URI("https://github.com/jlapeyre/msieve-shared/archive/v0.0.3.tar.gz"), smsieve,unpacked_dir="msieve-shared-0.0.3")
